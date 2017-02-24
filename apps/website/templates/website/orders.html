@@ -1,0 +1,34 @@
+{% extends "website/base_layout.html" %}
+
+
+{% block title %} {{ restaurant.title }}{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2><strong>Your orders</strong></h2>
+            <table class="table table-hover table-responsive table-bordered">
+                <thead>
+                <tr>
+                    <th>Meal</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in object_list %}
+                    <tr>
+                        <td><p><strong>{{ order.meal_name }}</strong></p>{{ order.restaurant.title }}</td>
+                        <td>{{ order.created_at }}</td>
+                        <td class="text-big"><strong>${{ order.meal_price }}</strong></td>
+                        <td><p class="text-{{ order.status }} text-big"><strong>{{ order.get_status_display }}</strong>
+                        </p></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

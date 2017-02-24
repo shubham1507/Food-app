@@ -1,0 +1,83 @@
+{% extends "website/headers.html" %}
+{% load staticfiles %}
+
+{% block body %}
+    <nav class="navbar navbar-transparent navbar-fixed-top navbar-color-on-scroll">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url "index" %}"><h4><strong>Pyszne.pl</strong></h4></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navigation-example">
+                <ul class="nav navbar-nav navbar-right">
+
+
+                    <li>
+                        <a href="/admin/restaurant/restaurant/add/"
+                           class="btn btn-simple btn-white ">
+                            <i class="material-icons">add_box</i> Add restaurant
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="material-icons">settings</i>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="{% url "logout" %}"
+                                   class="btn btn-simple text-left">
+                                    <i class="material-icons">shopping_cart</i> Logout
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url "orders" %}"
+                                   class="btn btn-simple  text-left">
+                                    <i class="material-icons">format_list_numbered</i> orders
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/restaurant/restaurant/"
+                                   class="btn btn-simple text-left ">
+                                    <i class="material-icons">format_list_numbered</i> restaurants
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <div class="header header-filter"
+             style="background-image: url('{% static  "website/img/bg.jpg" %}'); background-attachment: fixed;"></div>
+
+        <div class="main">
+            <div class="profile-content">
+                <div class="container">
+                    {% block content %} {% endblock %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="copyright text-center">
+                Kamil Gregorczyk, Piotr Bednarek, Radosław Wiosło
+            </div>
+        </div>
+    </footer>
+
+{% endblock %}

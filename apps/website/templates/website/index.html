@@ -1,0 +1,31 @@
+{% extends "website/base_layout.html" %}
+
+
+{% block content %}
+    {% with request.GET.city|default:request.user.city.name as city %}
+
+        <form action="" method="GET">
+            <select name="city" id="id_city" class="select2 city-select" data-only-restaurants="1" onchange="this.form.submit()">
+                <option value="{{ city }}">{{ city }}</option>
+            </select>
+        </form>
+        {% if not restaurant_list %}
+            <h4><strong>There are no restaurants in {{ city }}</strong></h4>
+        {% endif %}
+        {% for restaurant in restaurant_list %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2><strong>{{ restaurant.title }}</strong></h2>
+                    {% for menu in restaurant.menu.all %}
+                        <strong>{{ menu }}</strong>
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    <p>{{ restaurant.description }}</p>
+                    <a href="{{ restaurant.get_absolute_url }}" class="btn btn-primary">SEE MORE</a>
+                    {% if not forloop.last %}
+                        <hr> {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endwith %}
+{% endblock %}
