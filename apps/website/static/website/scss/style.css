@@ -70,4 +70,13 @@ body {
 .select2-container--default .select2-selection--single .select2-selection__arrow {
   top: 6px; }
 
+.text-alert[data-content="new"] {
+  color: black; }
+
+.text-alert[data-content="finalized"] {
+  color: green; }
+
+.text-alert[data-content="rejected"] {
+  color: red; }
+
 /*# sourceMappingURL=style.css.map */

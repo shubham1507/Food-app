@@ -24,10 +24,10 @@
 </head>
 
 <body>
+<div class="section-notifications" id="notifications">
 {% if messages %}
-    <div class="section-notifications" id="notifications">
         {% for message in messages %}
-            <div class="alert alert-{% if message.level_tag == "error" %}danger{% else %}{{ message.level_tag|lower }}{% endif %}">
+            <div class="alert alert-{% if message.level_tag == "error" %}danger{% else %}{{ message.level_tag|lower }}{% endif %}" data-id="">
                 <div class="container-fluid">
                     <div class="alert-icon">
                         <i class="material-icons">check</i>
@@ -40,8 +40,9 @@
             </div>
         {% endfor %}
         <div class="clearfix"></div>
-    </div>
+
 {% endif %}
+</div>
 {% block body %}
 {% endblock %}
 </body>

@@ -1,5 +1,9 @@
+import json
+
+from channels import Group
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import F
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
@@ -78,6 +82,8 @@ class CreateOrderView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         meal = Meal.objects.get(pk=kwargs["pk"])
         Order(user=request.user, restaurant=meal.menu.restaurant, meal_name=meal.title, meal_price=meal.price).save()
+        meal.order_count = F('order_count') + 1
+        meal.save()
         messages.add_message(self.request, messages.SUCCESS, "You've just ordered %s" % meal.title)
         return redirect(meal.menu.restaurant)
 

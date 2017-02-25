@@ -33,7 +33,6 @@ class OrderInlineAdmin(NestedTabularInline):
         return False
 
 
-
 @admin.register(Restaurant)
 class RestaurantAdmin(NestedModelAdmin):
     list_display = ("title", "city", "owner",)

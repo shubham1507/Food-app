@@ -14,6 +14,7 @@ class Meal(models.Model):
     class Meta:
         verbose_name = "Meal"
         verbose_name_plural = "Meal"
+        ordering = ["title"]
 
     def __str__(self):
         return self.title
