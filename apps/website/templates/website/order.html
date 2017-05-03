@@ -1,0 +1,23 @@
+{% extends "website/base_layout.html" %}
+{% load widget_tweaks %}
+
+{% block title %} {{ restaurant.title }}{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h3><strong>I'd like to order {{ meal.title }} from {{ meal.menu.restaurant }} on</strong></h3>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% render_field form.order_time class="form-control" %}
+                {{ form.order_time.errors }}
+                <input type="text" name="coupon_code" class="form-control" placeholder="Coupon code"/>
+                {{ form.errors }}
+                <div class="text-right">
+                    <button type="submit" class="btn btn-success">Order</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -54,6 +54,10 @@
   }
 }
 
+i.grey-star {
+  color: grey !important;
+}
+
 .footer {
   background: white;
   border-top: 1px solid #eee;
@@ -61,6 +65,20 @@
 
 body {
   background: white;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  .radio {
+    margin-top: 0;
+  }
+}
+
+.rate {
+  color: #ffb039;
+  font-size: 30px;
+  margin-bottom: 5px;
 }
 
 .alert {
@@ -107,6 +125,7 @@ body {
   color: green;
 
 }
+
 .text-alert[data-content="rejected"] {
   color: red;
 

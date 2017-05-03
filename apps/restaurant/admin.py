@@ -23,8 +23,8 @@ class MenuInlineAdmin(NestedStackedInline):
 class OrderInlineAdmin(NestedTabularInline):
     model = Order
     extra = 0
-    readonly_fields = ["user", "meal_name", "meal_price"]
-    fields = ["user", "meal_name", "meal_price", "status"]
+    readonly_fields = ["user", "meal_name", "meal_price", "order_time"]
+    fields = ["user", "order_time", "meal_name", "meal_price", "status"]
 
     def has_add_permission(self, request):
         return False

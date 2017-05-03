@@ -15,7 +15,7 @@ class MealForm(forms.ModelForm):
 
     class Meta:
         model = Meal
-        fields = ["title", "price", "tags"]
+        fields = ["title", "price", "tags", "image"]
         widgets = {
             'tags': TagAutocomplete(),
         }

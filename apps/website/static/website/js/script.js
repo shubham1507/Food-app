@@ -47,16 +47,18 @@ $(function () {
     socket = new WebSocket("ws://" + window.location.host + "/orders_channel/");
     socket.onmessage = function (e) {
         data = JSON.parse(e.data);
-        if ($("#order-table")) {
-            $('table p[data-id=' + data['id'] + ']').attr("data-content", data['status']);
-            $('table p[data-id=' + data['id'] + ']').find("strong").text(data['status'].capitalize());
+        if (data['status'] !== "cancelled_by_client") {
+            if ($("#order-table")) {
+                $('table p[data-id=' + data['id'] + ']').attr("data-content", data['status']);
+                $('table p[data-id=' + data['id'] + ']').find("strong").text(data['status'].capitalize());
+            }
+            status = (data['status'] == "rejected") ? "danger" : "success";
+            message = "Your order " + data["name"] + " is now " + data["status"];
+            $('#notifications').append(alert(status, message, data['id']));
+            setTimeout(function () {
+                $('.alert[data-id="' + data['id'] + '"]').fadeOut();
+            }, 3000);
         }
-        status = (data['status'] == "rejected") ? "danger" : "success";
-        message = "Your order " + data["name"] + " is now " + data["status"];
-        $('#notifications').append(alert(status, message, data['id']));
-        setTimeout(function () {
-            $('.alert[data-id="' + data['id'] + '"]').fadeOut();
-        }, 3000);
 
     };
     if (socket.readyState == WebSocket.OPEN) socket.onopen();

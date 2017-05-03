@@ -14,6 +14,7 @@
                     <th>Date</th>
                     <th>Price</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,9 @@
                         <td><p class="text-alert text-big" data-content="{{ order.status }}" data-id="{{ order.id }}">
                             <strong>{{ order.get_status_display }}</strong>
                         </p></td>
+                        <td>{% if order.status == "new" %}
+                            <a href="{% url "cancel_order" pk=order.id %}"
+                                                             class="btn btn-danger btn-sm">Cancel</a>{% endif %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

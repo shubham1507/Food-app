@@ -40,12 +40,26 @@
 .navbar-brand h4 {
   margin: 0; }
 
+i.grey-star {
+  color: grey !important; }
+
 .footer {
   background: white;
   border-top: 1px solid #eee; }
 
 body {
   background: white; }
+
+.flex-row {
+  display: flex;
+  align-items: center; }
+  .flex-row .radio {
+    margin-top: 0; }
+
+.rate {
+  color: #ffb039;
+  font-size: 30px;
+  margin-bottom: 5px; }
 
 .alert {
   opacity: 0.9; }

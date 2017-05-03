@@ -6,6 +6,7 @@ from apps.taggit_autocomplete.managers import TaggableManager
 
 class Meal(models.Model):
     menu = models.ForeignKey(Menu, related_name="meal")
+    image = models.ImageField(null=True, blank=True)
     title = models.CharField("Title", max_length=255)
     price = models.FloatField("Price")
     tags = TaggableManager("Ingredients")

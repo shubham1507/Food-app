@@ -1,5 +1,5 @@
 {% extends "website/base_layout.html" %}
-
+{% load templatetags %}
 
 {% block title %} {{ restaurant.title }}{% endblock %}
 {% block content %}
@@ -7,31 +7,106 @@
     <div class="row">
         <div class="col-xs-12">
             <h2><strong>{{ restaurant.title }}</strong></h2>
-            <p>{{ restaurant.description }}</p>
+            <div class="rate">
+                {% for rate in restaurant.rating.rate|to_rate %}
+                    <i class="material-icons {% if rate.checked %}yellow-star{% else %}grey-star{% endif %}">star</i>
+                {% endfor %}
+            </div>
 
-            {% for menu in restaurant.menu.all %}
-                <div class="card card-nav-tabs card-plain">
-                    <div class="header header-primary"><h4><strong>{{ menu.title }}</strong></h4></div>
-                </div>
-                {% for meal in menu.meal.all %}
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <h4>{{ meal }}</h4>
-                            {% for tag in meal.tags.all %}
-                                {{ tag }}
-                                {% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        </div>
-                        <div class="col-sm-5 text-right">
-                            <p class="price">${{ meal.price|floatformat:-2 }} </p>
-                            <a href="{% url "order" pk=meal.id %}" class="btn btn-success"><i class="material-icons">shopping_cart</i>
-                                Order</a>
+            <p>{{ restaurant.description }}</p>
+            <div class="card card-nav-tabs">
+                <div class="header header-primary">
+
+                    <div class="nav-tabs-navigation">
+                        <div class="nav-tabs-wrapper">
+                            <ul class="nav nav-tabs" data-tabs="tabs">
+                                <li class="active">
+                                    <a href="#profile" data-toggle="tab" aria-expanded="false">
+                                        <i class="material-icons">restaurant</i>
+                                        Menu
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#messages" data-toggle="tab" aria-expanded="false">
+                                        <i class="material-icons">comment</i>
+                                        Reviews ({{ restaurant.review_set.count }})
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                </li>
+                                {% with restaurant|has_reviewed:request.user as reviewed %}
+                                    {% if not reviewed %}
+                                        <li class="">
+                                            <a href="{% url 'review' restaurant_pk=restaurant.id %}">
+                                                <i class="material-icons">add</i>
+                                                Add a review
+                                                <div class="ripple-container"></div>
+                                            </a>
+
+                                        </li>
+                                    {% endif %}
+                                {% endwith %}
+
+                            </ul>
                         </div>
                     </div>
-                    <hr>
-                {% endfor %}
+                </div>
 
-            {% endfor %}
+                <div class="content">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="profile">
+                            {% for menu in restaurant.menu.all %}
+                                <div class="card card-nav-tabs card-plain">
+                                    <div class="header header-primary"><h4><strong>{{ menu.title }}</strong></h4></div>
+                                </div>
+                                {% for meal in menu.meal.all %}
+                                    <div class="row flex-row">
+                                        {% if meal.image %}
+                                            <div class="col-sm-2">
+                                                <img src="{{ meal.image.url }}" alt="{{ meal }}"
+                                                     class="img-responsive img-thumbnail">
+                                            </div>
+                                        {% endif %}
+                                        <div class="{% if meal.image %}col-sm-5{% else %}col-sm-7{% endif %}">
+                                            <h4>{{ meal }}</h4>
+                                            {% for tag in meal.tags.all %}
+                                                {{ tag }}
+                                                {% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <div class="col-sm-5 text-right">
+                                            <p class="price">${{ meal.price|floatformat:-2 }} </p>
+                                            <a href="{% url "order" restaurant_pk=restaurant.id meal_pk=meal.id %}" class="btn btn-success"><i
+                                                    class="material-icons">shopping_cart</i>
+                                                Order</a>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                {% endfor %}
+
+                            {% endfor %}
+                        </div>
+                        <div class="tab-pane" id="messages">
+                            {% for review in restaurant.review_set.all %}
+                                {% with review|is_author:request.user as is_author %}
+                                    {% if is_author %}<strong>{% endif %}
+                                <blockquote>
+                                    <div class="rate">
+                                        <strong>{{ review.rate }}<i class="material-icons">star</i></strong>
+                                    </div>
+                                    {{ review.comment }}</blockquote>
+                                <p class="text-muted">Added by:
+                                    {{ review.author }}
+                                </p>
+                                {% if is_author %}</strong>{% endif %}
+                                    <hr>
+                                {% endwith %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>

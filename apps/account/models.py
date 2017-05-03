@@ -64,6 +64,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         send_mail(subject, message, from_email, [self.email])
 
+    def __str__(self):
+        return self.get_full_name()
+
 
 class City(models.Model):
     name = models.CharField("City", max_length=255)

@@ -31,8 +31,8 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         user = form.save(False)
         user.set_password(form.cleaned_data["password1"])
-        print(form.cleaned_data["city"])
-        print(self.request.POST)
+        user.first_name = form.cleaned_data["first_name"]
+        user.last_name = form.cleaned_data["last_name"]
         user.city = City.objects.filter(name=form.cleaned_data["city"]).first()
         user.is_staff = True
         user.save()
